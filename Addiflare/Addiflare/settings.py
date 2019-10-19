@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+from datetime import timedelta
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -25,6 +26,14 @@ SECRET_KEY = '+&a6&ie)ik8ipw7h-g!vd=o_*)74df9t7qzi*r12vl@&+40zb%'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+#Email Config
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'customerservice2fa@gmail.com'
+EMAIL_HOST_PASSWORD = 'toorpassword'
+
 ALLOWED_HOSTS = []
 
 
@@ -37,11 +46,20 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    #Packages
+    'Addicore.apps.AddicoreConfig',
+    'corsheaders',
+    'graphene_django',
+    'django_private_chat',
+    'channels',
+    'channels_api',
+    
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -50,6 +68,39 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'Addiflare.urls'
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CHAT_WS_SERVER_HOST = 'localhost'
+CHAT_WS_SERVER_PORT = 5002
+CHAT_WS_SERVER_PROTOCOL = 'ws'
+
+GRAPHENE = {
+    'SCHEMA': 'Addiflare.schema.schema',
+    'SCHEMA_INDENT': 4,
+    'MIDDLEWARE': [
+        'graphql_jwt.middleware.JSONWebTokenMiddleware',
+        'graphene_django_subscriptions.depromise_subscription',
+    ],
+}
+
+CHANNELS_WS_PROTOCOLS = ["graphql-ws", ]
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "asgiref.inmemory.ChannelLayer",
+        "ROUTING": "Addiflare.urls.channel_routing",
+    },
+
+}
+
+GRAPHQL_JWT = {
+    'JWT_EXPIRATION_DELTA': timedelta(hours=10),
+}
+
+AUTHENTICATION_BACKENDS = [
+    'graphql_jwt.backends.JSONWebTokenBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 TEMPLATES = [
     {
