@@ -31,10 +31,10 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_USE_TLS = True
 EMAIL_PORT = 587
-EMAIL_HOST_USER = 'customerservice2fa@gmail.com'
+EMAIL_HOST_USER = 'customerservice2fa@gmail.com
 EMAIL_HOST_PASSWORD = 'toorpassword'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '*']
 
 
 # Application definition
@@ -51,8 +51,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'graphene_django',
     'django_private_chat',
-    'channels',
-    'channels_api',
     
 ]
 
@@ -80,7 +78,6 @@ GRAPHENE = {
     'SCHEMA_INDENT': 4,
     'MIDDLEWARE': [
         'graphql_jwt.middleware.JSONWebTokenMiddleware',
-        'graphene_django_subscriptions.depromise_subscription',
     ],
 }
 
