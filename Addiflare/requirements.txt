@@ -9,7 +9,7 @@ channels==1.1.8
 channels-api==0.4.1
 chardet==3.0.4
 constantly==15.1.0
-cryptography==2.8
+cryptography==3.2
 daphne==1.4.2
 Django==2.1
 django-braces==1.13.0
