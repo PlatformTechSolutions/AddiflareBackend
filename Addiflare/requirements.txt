@@ -44,6 +44,6 @@ sqlparse==0.3.0
 stripe==2.37.2
 Twisted==19.7.0
 txaio==18.8.1
-urllib3==1.25.6
+urllib3==1.25.8
 websockets==3.2
 zope.interface==4.6.0
